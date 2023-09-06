@@ -66,7 +66,7 @@ class AddressesList extends StatelessWidget {
             return SizedBox(
                 height: Get.height * 0.75,
                 child:
-                    ErrorIndicator(errorMessage: state.errorMessage ?? 'جطا '));
+                    ErrorIndicator(errorMessage: state.errorMessage ?? 'خطأ'));
           default:
             return const SizedBox();
         }

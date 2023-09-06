@@ -45,7 +45,7 @@ class CustomHeader extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: AppColorsLight.kAppPrimaryColorLight,
                       fontWeight: FontWeight.w700,
-                      letterSpacing: 1,
+                      letterSpacing: 0.5,
                       fontSize: 17.sp),
                 ),
               ),

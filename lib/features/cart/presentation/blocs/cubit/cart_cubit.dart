@@ -31,6 +31,7 @@ class CartCubit extends Cubit<CartState> {
   final DeleteCartItemUseCase deleteCartItemUseCase;
   final ClearCartUseCase clearCartUseCase;
   final AddShoppingListUseCase addShoppingListUseCase;
+
   CartCubit(
       {required this.fetchCartItemsUseCase,
       required this.addShoppingListUseCase,
@@ -42,6 +43,7 @@ class CartCubit extends Cubit<CartState> {
       : super(const CartState());
 
   List<CartItem> _cart = [];
+
   List<CartItem> get cart => _cart;
 
   void resetCart() {
@@ -72,9 +74,10 @@ class CartCubit extends Cubit<CartState> {
               buttonTitle: 'حسنا',
               mainContent: 'تمت اضافة قائمة التسوق',
               title: 'ملاحظة',
-              onConfirm: () => Get
-                ..back()
-                ..back(),
+              onConfirm: () {
+                Get..back()..back();
+                clearCart();
+              },
             ));
   }
 
@@ -144,15 +147,20 @@ class CartCubit extends Cubit<CartState> {
   void addItemToCart(Product product) {
     final isProductExist = checkIfItemisInCart(product);
     CartItem? cartItem;
+    _cart = List.from(state.cartItems!);
     if (isProductExist) {
       cartItem = state.cartItems!
           .firstWhere((element) => element.product!.id == product.id);
-      cartItem.copyWith(quantity: cartItem.quantity! + 1);
+      int newQuantity = cartItem.quantity! + 1;
+      _cart.remove(cartItem);
+      cartItem = CartItem(product: product, quantity: newQuantity);
+      _cart.add(cartItem);
+      // cartItem.copyWith(quantity: newQuantity);
     } else {
       cartItem = CartItem(product: product, quantity: 1);
+      _cart = List.from(state.cartItems!)..add(cartItem);
     }
-
-    _cart = List.from(state.cartItems!)..add(cartItem);
+    // _cart = List.from(state.cartItems!)..add(cartItem);
     final response = addCartItemUseCase(QuantityParams(cartItem: cartItem));
 
     response.fold((failure) {

@@ -50,8 +50,8 @@ class AppSettingsServiceImpl implements AppSettingsService {
         _isNearStores = value;
         return value;
       } else {
-        _isNearStores = false;
-        return false;
+        _isNearStores = true;
+        return true;
       }
     } catch (err) {
       return _isNearStores;

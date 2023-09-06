@@ -60,7 +60,8 @@ class NearStoresLoaded extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TitleRow(
-          title: 'السوبر ماركتس القريبة منك  🏠',
+          title: 'المحلات القريبة منك  🏠',
+          fontWeight: FontWeight.w700,
           onSelectAll: () {
             final zoneName = getIt<ZoneService>().currentSubZone!.name;
             Get.toNamed(RouteHelper.getSearchRoute(), arguments: [

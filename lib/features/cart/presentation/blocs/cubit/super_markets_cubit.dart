@@ -1,11 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:yabalash_mobile_app/core/constants/constants.dart';
 import 'package:yabalash_mobile_app/features/cart/domain/entities/store_price.dart';
 import 'package:yabalash_mobile_app/features/cart/domain/entities/supermarket_card_model.dart';
 import 'package:yabalash_mobile_app/features/home/domain/entities/location.dart';
 import 'package:yabalash_mobile_app/features/product_details/domain/usecases/get_product_details_usecase.dart';
 
 import '../../../../../core/depedencies.dart';
+import '../../../../../core/services/app_settings_service.dart';
 import '../../../../../core/services/order_service.dart';
 import '../../../../../core/services/zone_service.dart';
 import '../../../../../core/utils/enums/request_state.dart';
@@ -20,6 +22,7 @@ part 'super_markets_state.dart';
 class SuperMarketsCubit extends Cubit<SuperMarketsState> {
   final GetStoreUseCase getStoreUseCase;
   final GetProductDetailsUseCase getProductDetailsUseCase;
+
   SuperMarketsCubit({
     required this.getProductDetailsUseCase,
     required this.getStoreUseCase,
@@ -167,6 +170,119 @@ class SuperMarketsCubit extends Cubit<SuperMarketsState> {
           unAvailableSupermarkets:
               supermarkets.where((element) => !element.isAvailable!).toList()));
     }
+  }
+
+  void getSupermarketsTable([bool? removeCart]) async {
+    /**
+     * GET LIST OF CHEAPEST SUPERMARKET FOR EACH PRODUCT
+     * GENERATE MAP WITH THE PRICE OF EACH PRODUCT IN EACH SUPERMARKET
+     * */
+    bool hasError = false;
+    final cartProducts = await _getCartProductsDetails();
+    Set<Store> availableStores = {};
+    Map<CartItem, Map<Store, double>> table = {};
+    // Set<int> cheapestStores = {};
+    Map<int, Map<int, double>> storeProducts = {};
+    Map<int, CartItem> products = {};
+    Map<int, Store> stores = {};
+
+    for (var cartProduct in cartProducts) {
+      products[cartProduct.product!.id!] = cartProduct;
+      double minPrice = maxDouble;
+      int? minStoreId;
+      Store? minStore;
+      int quantity = cartProduct.quantity!;
+      for (var priceModel in cartProduct.product!.prices!.entries) {
+        double price = priceModel.value.price!;
+        bool isAvailable = priceModel.value.isAvailable!;
+        if (isAvailable) {
+          if (storeProducts.containsKey(priceModel.value.storeId!)) {
+            var productPrice = storeProducts[priceModel.value.storeId!];
+            productPrice![cartProduct.product!.id!] = price * quantity;
+          } else {
+            int key = cartProduct.product!.id!;
+            double value = price * quantity;
+            storeProducts[priceModel.value.storeId!] = {key: value};
+          }
+        }
+        if (isAvailable && price < minPrice) {
+          int id = priceModel.value.storeId!;
+          final response = await getStoreUseCase(GetStoreParams(id: id));
+          response.fold((failure) {
+            hasError = true;
+            emit(state.copyWith(storeRequestState: RequestState.error));
+            return;
+          }, (store) {
+            if (getIt<AppSettingsService>().isNearStores) {
+              bool isStoreInZone = _checkStoreInSameZone(store);
+              if (isStoreInZone) {
+                // stores[cheapestStores.elementAt(id)] = store;
+                // availableStores.add(store);
+                minStoreId = id;
+                minPrice = price;
+                minStore = store;
+              }
+            } else {
+              minStoreId = id;
+              minPrice = price;
+              minStore = store;
+            }
+          });
+        }
+      }
+      // cheapestStores.add(minStoreId!);
+      if (minStore != null) {
+        stores[minStoreId!] = minStore!;
+        availableStores.add(minStore!);
+      }
+    }
+
+
+
+    for (var product in cartProducts) {
+      for (var store in availableStores) {
+        bool isExists = _checkIteminStoreId(store, product);
+        if (table.containsKey(product)) {
+          var currStores = table[product];
+          if (isExists) {
+            currStores![store] =
+                product.product!.prices![store.name]!.price!;
+          }
+          else {
+            currStores![store] = -1;
+          }
+          table[product] = currStores;
+        } else {
+          if (isExists) {
+            table[product] = {
+              store:
+                  product.product!.prices![store.name]!.price!
+            };
+          } else {
+            table[product] = {store: -1};
+          }
+        }
+      }
+    }
+
+    if (!hasError) {
+      if (removeCart != null) {
+        getIt<CartCubit>().resetCart();
+      }
+
+      emit(state.copyWith(
+          supermarketsTable: table,
+          storeRequestState: RequestState.loaded,
+          storeProducts: storeProducts,
+          tableHeaderRow: availableStores.toList()));
+    }
+  }
+
+  bool _checkIteminStoreId(Store store, CartItem product) {
+    for (var s in product.product!.prices!.entries) {
+      if (s.value.storeId == store.id) return true;
+    }
+    return false;
   }
 
   bool _checkStoreInSameZone(Store store) {

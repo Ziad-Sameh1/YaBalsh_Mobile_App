@@ -105,6 +105,7 @@ class SectionLoaded extends StatelessWidget {
       children: [
         smallVerticalSpace,
         TitleRow(
+          fontWeight: FontWeight.w700,
           title: sectionName,
           onSelectAll: () => Get.toNamed(RouteHelper.getSearchRoute(),
               arguments: [

@@ -6,5 +6,6 @@ enum SearchNavigationScreens {
   mainCategories,
   subCategories,
   other,
-  notification
+  notification,
+  flyers
 }

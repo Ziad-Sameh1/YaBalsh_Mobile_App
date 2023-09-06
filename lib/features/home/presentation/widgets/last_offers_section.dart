@@ -61,6 +61,7 @@ class LastOffersLoaded extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TitleRow(
+                fontWeight: FontWeight.w700,
                 title: 'اكتشف ارخص العروض',
                 onSelectAll: () => BlocProvider.of<MainNavigationCubit>(context)
                     .changePage(1)),

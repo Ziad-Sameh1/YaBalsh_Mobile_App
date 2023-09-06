@@ -20,9 +20,12 @@ import 'package:yabalash_mobile_app/features/home/domain/usecases/get_banners_us
 import 'package:yabalash_mobile_app/features/home/domain/usecases/get_near_stores_use_case.dart';
 import 'package:yabalash_mobile_app/features/home/domain/usecases/get_product_bybarcode_usecase.dart';
 import 'package:yabalash_mobile_app/features/home/domain/usecases/get_sections_use_case.dart';
+import 'package:yabalash_mobile_app/features/product_details/domain/usecases/get_product_details_usecase.dart';
 import 'package:yabalash_mobile_app/features/zones/domain/usecases/get_past_subzones_usecase.dart';
 
 import '../../../../../core/services/categories_service.dart';
+import '../../../../flyers/domain/entities/Flyer.dart';
+import '../../../../flyers/domain/usecases/get_flyers_usecase.dart';
 import '../../../../zones/domain/entities/sub_zone.dart';
 import '../../../domain/entities/store.dart';
 import '../../../domain/usecases/get_maincategories_usecase.dart';
@@ -36,6 +39,8 @@ class HomeCubit extends Cubit<HomeState> {
   final GetSectiosUseCase getSectiosUseCase;
   final GetPastSubZonesUseCase getPastSubZonesUseCase;
   final GetProductByBarCodeUseCase getProductByBarCodeUseCase;
+  final GetProductDetailsUseCase getProductDetailsUseCase;
+  final GetFlyersUseCase getFlyersUseCase;
 
   HomeCubit(
       {required this.getMainCategoriesUseCase,
@@ -43,7 +48,9 @@ class HomeCubit extends Cubit<HomeState> {
       required this.getPastSubZonesUseCase,
       required this.getBannersUseCase,
       required this.getNearStoresUseCase,
-      required this.getSectiosUseCase})
+      required this.getSectiosUseCase,
+      required this.getProductDetailsUseCase,
+      required this.getFlyersUseCase})
       : super(const HomeState());
 
   void onBannerChanged(int index) {
@@ -63,6 +70,19 @@ class HomeCubit extends Cubit<HomeState> {
         emit(state.copyWith(
             lastOfferrequestState: RequestState.loaded, lastOffers: offers));
       }
+    });
+  }
+
+  void getFlyersList() async {
+    final response = await getFlyersUseCase(NoParams());
+    response.fold(
+        (failure) => {
+              emit(state.copyWith(
+                  flyersRequestState: RequestState.error,
+                  flyersError: failure.message))
+            }, (flyers) {
+      emit(state.copyWith(
+          flyers: flyers, flyersRequestState: RequestState.loaded));
     });
   }
 

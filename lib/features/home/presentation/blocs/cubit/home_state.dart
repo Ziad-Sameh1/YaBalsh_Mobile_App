@@ -17,6 +17,9 @@ class HomeState extends Equatable {
   final List<HomeSection>? homeSections;
   final RequestState? homeSectionsRequestState;
   final int? currentBannerIndex;
+  final List<Flyer>? flyers;
+  final RequestState? flyersRequestState;
+  final String? flyersError;
 
   const HomeState(
       {this.lastOffersError = '',
@@ -34,23 +37,28 @@ class HomeState extends Equatable {
       this.nearStoreRequestState = RequestState.loading,
       this.sectionsError = '',
       this.homeSections = const [],
-      this.homeSectionsRequestState = RequestState.loading});
+      this.homeSectionsRequestState = RequestState.loading,
+      this.flyers = const [],
+      this.flyersRequestState = RequestState.loading,
+      this.flyersError = ''});
 
-  HomeState copyWith({
-    String? lastOffersError,
-    List<Category>? lastOffers,
-    RequestState? lastOfferrequestState,
-    String? bannersError,
-    List<Banner>? banners,
-    RequestState? bannersRequestState,
-    String? nearStoresError,
-    List<Store>? nearStores,
-    RequestState? nearStoreRequestState,
-    String? sectionsError,
-    List<HomeSection>? homeSections,
-    RequestState? homeSectionsRequestState,
-    int? currentBannerIndex,
-  }) {
+  HomeState copyWith(
+      {String? lastOffersError,
+      List<Category>? lastOffers,
+      RequestState? lastOfferrequestState,
+      String? bannersError,
+      List<Banner>? banners,
+      RequestState? bannersRequestState,
+      String? nearStoresError,
+      List<Store>? nearStores,
+      RequestState? nearStoreRequestState,
+      String? sectionsError,
+      List<HomeSection>? homeSections,
+      RequestState? homeSectionsRequestState,
+      int? currentBannerIndex,
+      List<Flyer>? flyers,
+      RequestState? flyersRequestState,
+      String? flyersError}) {
     return HomeState(
         lastOffers: lastOffers ?? this.lastOffers,
         lastOffersError: lastOffersError ?? this.lastOffersError,
@@ -67,7 +75,10 @@ class HomeState extends Equatable {
             nearStoreRequestState ?? this.nearStoreRequestState,
         nearStores: nearStores ?? this.nearStores,
         nearStoresError: nearStoresError ?? this.nearStoresError,
-        currentBannerIndex: currentBannerIndex ?? this.currentBannerIndex);
+        currentBannerIndex: currentBannerIndex ?? this.currentBannerIndex,
+        flyers: flyers ?? this.flyers,
+        flyersError: flyersError ?? this.flyersError,
+        flyersRequestState: flyersRequestState ?? this.flyersRequestState);
   }
 
   @override
@@ -84,6 +95,9 @@ class HomeState extends Equatable {
         sectionsError!,
         homeSections!,
         homeSectionsRequestState!,
-        currentBannerIndex!
+        currentBannerIndex!,
+        flyers!,
+        flyersRequestState!,
+        flyersError!
       ];
 }

@@ -3,12 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:yabalash_mobile_app/core/depedencies.dart';
 import 'package:yabalash_mobile_app/core/services/app_settings_service.dart';
+import 'package:yabalash_mobile_app/features/cart/presentation/widgets/new_supermarkets_section.dart';
 
-import '../../../../core/constants/app_layouts.dart';
 import '../../../../core/utils/enums/empty_states.dart';
 import '../../../../core/widgets/empty_indicator.dart';
 import '../blocs/cubit/super_markets_cubit.dart';
-import 'supermarkets_section.dart';
 
 class SuperMarketsLoaded extends StatelessWidget {
   const SuperMarketsLoaded({
@@ -21,16 +20,10 @@ class SuperMarketsLoaded extends StatelessWidget {
       builder: (context, state) {
         return Expanded(
           child: SingleChildScrollView(
-            child: Padding(
-              padding: getIt<AppSettingsService>().appConfig.appVersion !=
-                      '2.0.0' // complete version no padding (EdgeInsets.zero)
-                  ? kDefaultPadding
-                  : EdgeInsets.zero,
-              child: Column(
+            child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  state.availableSupermarkets!.isEmpty &&
-                          state.unAvailableSupermarkets!.isEmpty
+                  state.supermarketsTable!.entries.isEmpty
                       ? SizedBox(
                           height: getIt<AppSettingsService>()
                                       .appConfig
@@ -44,17 +37,16 @@ class SuperMarketsLoaded extends StatelessWidget {
                                 title: 'لا يوجد سوبرماركتس لطلب المنتجات'),
                           ),
                         )
-                      : const SupermarketsSection(
+                      : const NewSupermarketsSection(
                           isAvailableMarkets: true,
                         ),
                   state.unAvailableSupermarkets!.isEmpty
                       ? const SizedBox()
-                      : const SupermarketsSection(
+                      : const NewSupermarketsSection(
                           isAvailableMarkets: false,
                         ),
                 ],
               ),
-            ),
           ),
         );
       },

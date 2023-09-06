@@ -17,47 +17,43 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: kScaffoldPadding,
+      padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Spacer(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "التوصيل الى",
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-              smallVerticalSpace,
-              InkWell(
-                onTap: () async {
-                  final subZones = await BlocProvider.of<HomeCubit>(context)
-                      .getSubZoneHistory();
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) => ZonesBottomModal(zones: subZones),
-                  );
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      getIt<ZoneService>().currentSubZone?.name ?? '',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColorsLight.kAppPrimaryColorLight),
-                    ),
-                    const Icon(
-                      Icons.keyboard_arrow_down,
-                      color: AppColorsLight.kAppPrimaryColorLight,
-                    )
-                  ],
-                ),
-              )
-            ],
+          // const Spacer(),
+          Text(
+            "العروض في منطقة",
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.black),
           ),
-          const Spacer()
+          smallHorizontalSpace,
+          InkWell(
+            onTap: () async {
+              final subZones = await BlocProvider.of<HomeCubit>(context)
+                  .getSubZoneHistory();
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => ZonesBottomModal(zones: subZones),
+              );
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  getIt<ZoneService>().currentSubZone?.name ?? '',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppColorsLight.kAppPrimaryColorLight, fontSize: 14),
+                ),
+                const Icon(
+                  Icons.keyboard_arrow_down,
+                  color: AppColorsLight.kAppPrimaryColorLight,
+                  size: 20,
+                )
+              ],
+            ),
+          ),
+          // const Spacer()
         ],
       ),
     );

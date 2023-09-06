@@ -56,6 +56,9 @@ import 'package:yabalash_mobile_app/features/categories/data/repositories/catego
 import 'package:yabalash_mobile_app/features/categories/domain/repositories/categories_repository.dart';
 import 'package:yabalash_mobile_app/features/categories/domain/usecases/get_sub_categories_usecase.dart';
 import 'package:yabalash_mobile_app/features/categories/presentation/blocs/categories_cubit.dart';
+import 'package:yabalash_mobile_app/features/flyers/data/repositories/flyers_repository_impl.dart';
+import 'package:yabalash_mobile_app/features/flyers/domain/usecases/get_flyers_usecase.dart';
+import 'package:yabalash_mobile_app/features/flyers/domain/repositories/flyers_repository.dart';
 import 'package:yabalash_mobile_app/features/home/data/datasources/home_mock_datasource.dart';
 import 'package:yabalash_mobile_app/features/home/data/datasources/home_remote_datasource.dart';
 import 'package:yabalash_mobile_app/features/home/data/repositories/home_repository_impl.dart';
@@ -127,6 +130,8 @@ import 'package:yabalash_mobile_app/features/zones/presentation/blocs/cubit/main
 import 'package:yabalash_mobile_app/features/zones/presentation/blocs/cubit/sub_zone_cubit.dart';
 
 import '../features/auth/presentation/blocs/cubit/register_cubit.dart';
+import '../features/flyers/data/datasources/flyer_remote_datasource.dart';
+import '../features/flyers/presentation/blocs/flyers_cubit.dart';
 import '../features/on_boaring/presentation/blocs/cubit/on_boarding_cubit.dart';
 import '../features/product_details/domain/repositories/product_details_repository.dart';
 import '../features/product_details/domain/usecases/get_product_relevants_usecase.dart';
@@ -138,6 +143,7 @@ import '../features/shopping_lists/domain/usecases/remove_shopping_list_usecase.
 import '../features/zones/data/datasources/zone_local_data_source.dart';
 
 final getIt = GetIt.instance;
+
 setupDependecies() {
   final remoteConfig = FirebaseRemoteConfig.instance;
   getIt.registerLazySingleton(() => Dio());
@@ -208,6 +214,9 @@ setupDependecies() {
   getIt.registerLazySingleton<NotificationRemoteDataSource>(
       () => NotificationRemoteDataSourceImpl(restApiProvider: getIt()));
 
+  getIt.registerLazySingleton<FlyerRemoteDataSource>(
+      () => FlyerRemoteDataSourceImpl(restApiProvider: getIt()));
+
   //repos
   getIt.registerLazySingleton<SplashRepository>(
       () => SplashRepositoryImpl(localStorageProvider: getIt()));
@@ -255,6 +264,8 @@ setupDependecies() {
       () => NotificationRepositoryImpl(
             notificationRemoteDataSource: getIt(),
           ));
+  getIt.registerLazySingleton<FlyersRepository>(
+      () => FlyersRepositoryImpl(flyerRemoteDataSource: getIt()));
   // use cases
 
   getIt.registerLazySingleton(
@@ -354,6 +365,8 @@ setupDependecies() {
 
   getIt.registerLazySingleton(
       () => GetAllNotificationsUseCase(notificationRepository: getIt()));
+  getIt.registerLazySingleton<GetFlyersUseCase>(
+      () => GetFlyersUseCase(flyersRepository: getIt()));
 
 //cubits/blocs
   getIt.registerFactory(
@@ -363,7 +376,9 @@ setupDependecies() {
         getMainCategoriesUseCase: getIt(),
         getBannersUseCase: getIt(),
         getNearStoresUseCase: getIt(),
-        getSectiosUseCase: getIt()),
+        getSectiosUseCase: getIt(),
+        getFlyersUseCase: getIt(),
+        getProductDetailsUseCase: getIt()),
   );
 
   getIt.registerFactory(
@@ -478,4 +493,6 @@ setupDependecies() {
   getIt.registerFactory(() => StoreDetailsCubit());
   getIt.registerFactory(() => SettingsCubit(appSettingsService: getIt()));
   getIt.registerFactory(() => OtherBranchesCubit(searchStoreUsecase: getIt()));
+  getIt.registerFactory(() => FlyersCubit(
+      getFlyersUseCase: getIt(), getProductDetailsUseCase: getIt()));
 }

@@ -17,7 +17,7 @@ import '../../../../core/theme/light/app_colors_light.dart';
 import '../../../../core/utils/show_support_dialog.dart';
 import '../../../../core/widgets/custom_dialog.dart';
 import '../../../../core/widgets/custom_header.dart';
-import 'isNear_setting_card.dart';
+import 'isnear_setting_card.dart';
 
 class SettingsBody extends StatelessWidget {
   const SettingsBody({super.key});
@@ -67,16 +67,16 @@ class SettingsBody extends StatelessWidget {
                                 color: Colors.grey.shade300,
                                 thickness: 1,
                               ),
-                        SettingsElementCard(
-                            onTap: () {
-                              Get.toNamed(RouteHelper.getNotificationsRoute());
-                            },
-                            iconPath: AppAssets.notificationIcon,
-                            title: 'الاشعارات'),
-                        Divider(
-                          color: Colors.grey.shade300,
-                          thickness: 1,
-                        ),
+                        // SettingsElementCard(
+                        //     onTap: () {
+                        //       Get.toNamed(RouteHelper.getNotificationsRoute());
+                        //     },
+                        //     iconPath: AppAssets.notificationIcon,
+                        //     title: 'الاشعارات'),
+                        // Divider(
+                        //   color: Colors.grey.shade300,
+                        //   thickness: 1,
+                        // ),
                         SettingsElementCard(
                             onTap: () {
                               Get.toNamed(RouteHelper.getAddressesRoute(),

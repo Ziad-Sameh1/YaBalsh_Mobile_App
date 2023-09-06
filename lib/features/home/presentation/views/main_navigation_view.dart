@@ -128,6 +128,7 @@ final List<Widget> screens = [
         if (!getIt<HomeCubit>().isClosed) {
           return getIt<HomeCubit>()
             ..getLastOffers()
+            ..getFlyersList()
             ..getBanners()
             ..getNearStores()
             ..getHomeSections()

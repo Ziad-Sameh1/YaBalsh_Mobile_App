@@ -22,7 +22,16 @@ class SearchSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
-            flex: 4,
+              flex: 1,
+              child: IconButton(
+                icon: const Badge(smallSize: 8, child: Icon(Icons.notifications_none_rounded,
+                    color: AppColorsLight.kAppPrimaryColorLight)),
+                onPressed: () {
+                  Get.toNamed(RouteHelper.getNotificationsRoute());
+                },
+              )),
+          Expanded(
+            flex: 6,
             child: GestureDetector(
               onTap: () {
                 Get.toNamed(RouteHelper.getSearchRoute(),
@@ -30,7 +39,7 @@ class SearchSection extends StatelessWidget {
               },
               child: Card(
                   child: Container(
-                padding: EdgeInsets.symmetric(vertical: 7.h, horizontal: 5.w),
+                padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
                 child: Row(
                   children: [
                     const Icon(

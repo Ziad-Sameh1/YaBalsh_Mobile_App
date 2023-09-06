@@ -10,7 +10,6 @@ import 'package:yabalash_mobile_app/features/home/presentation/widgets/home_sect
 import 'package:yabalash_mobile_app/features/home/presentation/widgets/last_offers_section.dart';
 import 'package:yabalash_mobile_app/features/home/presentation/widgets/near_stores_section.dart';
 import 'package:yabalash_mobile_app/features/home/presentation/widgets/search_section.dart';
-import 'package:yabalash_mobile_app/features/home/presentation/widgets/welcome_section.dart';
 
 import '../../../../core/depedencies.dart';
 import '../../../../core/routes/app_routes.dart';
@@ -43,11 +42,12 @@ class HomeBody extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         slivers: [
           const SliverToBoxAdapter(child: HomeHeader()),
-          const SliverToBoxAdapter(child: WelcomeSection()),
+          // const SliverToBoxAdapter(child: WelcomeSection()),
           SliverToBoxAdapter(child: mediumVerticalSpace),
           const SliverToBoxAdapter(child: SearchSection()),
           SliverToBoxAdapter(child: mediumVerticalSpace),
           const SliverToBoxAdapter(child: LastOfferSection()),
+          // const SliverToBoxAdapter(child: FlyerSection()),
           const SliverToBoxAdapter(child: BannersSection()),
           SliverToBoxAdapter(child: mediumVerticalSpace),
           const SliverToBoxAdapter(child: NearStoresSection()),

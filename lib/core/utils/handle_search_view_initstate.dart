@@ -58,5 +58,7 @@ SearchCubit handleSearchViewInitState(
         ..getSearchHistory()
         ..getMostSellingProducts()
         ..search(searchName);
+    default:
+      return getIt<SearchCubit>();
   }
 }

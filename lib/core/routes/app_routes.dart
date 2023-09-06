@@ -18,6 +18,8 @@ import 'package:yabalash_mobile_app/features/auth/presentation/blocs/cubit/regis
 import 'package:yabalash_mobile_app/features/auth/presentation/views/login_view.dart';
 import 'package:yabalash_mobile_app/features/auth/presentation/views/phone_number_view.dart';
 import 'package:yabalash_mobile_app/features/auth/presentation/views/register_view.dart';
+import 'package:yabalash_mobile_app/features/flyers/presentation/blocs/flyers_cubit.dart';
+import 'package:yabalash_mobile_app/features/flyers/presentation/views/flyer_view.dart';
 import 'package:yabalash_mobile_app/features/home/presentation/blocs/cubit/main_navigation_cubit.dart';
 import 'package:yabalash_mobile_app/features/home/presentation/views/main_navigation_view.dart';
 import 'package:yabalash_mobile_app/features/notifications/presentation/blocs/cubit/notifications_cubit.dart';
@@ -53,6 +55,7 @@ import 'package:yabalash_mobile_app/features/zones/presentation/views/sub_zones_
 
 import '../../features/cart/presentation/blocs/cubit/super_markets_cubit.dart';
 import '../../features/cart/presentation/widgets/supermarkets_list.dart';
+import '../../features/flyers/domain/entities/Flyer.dart';
 import '../../features/home/domain/entities/product.dart';
 import '../../features/orders/domain/entities/order.dart';
 import '../../features/orders/presentation/blocs/cubit/order_success_cubit.dart';
@@ -90,32 +93,59 @@ class RouteHelper {
   static const String _storeDetailsRoute = '/store-details';
   static const String _otherBranchesRoute = '/other-branches';
   static const String _supermarketsRoute = '/supermarkets';
+  static const String _flyerRoute = '/flyer';
 
   static getIntialRoute() => _intialRoute;
+
   static getOnBoardingRoute() => _onBordingRoute;
+
   static getHomeRoute() => _homeRoute;
+
   static getMainNavigationRoute() => _mainNavigationRoute;
+
   static getProductDetailsRoute() => _productDetailsRoute;
+
   static getLoginRoute() => _loginRoute;
+
   static getRegisterRoute() => _registerRoute;
+
   static getMainZonesRoute() => _mainZonesRoute;
+
   static getSubZonesRoute() => _subZonesRoutes;
+
   static getPhoneNumberRoute() => _phoneNumberRoute;
+
   static getAddressesRoute() => _addressesRoute;
+
   static getUpdateAddress() => _updateAddressRoute;
+
   static getOrderSuccessRoute() => _orderSuccessRoute;
+
   static getPastOrdersRoute() => _pastOrdersRoute;
+
   static getShoppingListDetailsRoute() => _shoppingListDetailsRoute;
+
   static getSearchRoute() => _searchRoute;
+
   static getCartRoute() => _cartRoute;
+
   static getSettingsRoute() => _settingsRoute;
+
   static getRecipiesRoute() => _recipiesRoute;
+
   static getRecipieDetailsRoute() => _recipieDetailsRoute;
+
   static getBrandDetailsRoute() => _brandDetailsRoute;
+
   static getNotificationsRoute() => _notificationsRoute;
+
   static getStoreDetailsRoute() => _storeDetailsRoute;
+
   static getOtherBranches() => _otherBranchesRoute;
+
   static getSupermarketsRoute() => _supermarketsRoute;
+
+  static getFlyerRoute() => _flyerRoute;
 
   static final routes = [
     GetPage(
@@ -440,9 +470,25 @@ class RouteHelper {
         page: () {
           return InternetConnectionWrapper(
             child: BlocProvider<SuperMarketsCubit>(
-              create: (context) =>
-                  getIt<SuperMarketsCubit>()..getSuperMarkets(true),
+              create: (context) {
+                return getIt<SuperMarketsCubit>()..getSupermarketsTable(true);
+              },
               child: const Scaffold(body: SuperMarketLists()),
+            ),
+          );
+        }),
+    GetPage(
+        name: _flyerRoute,
+        transition: normalNavigationTransition,
+        transitionDuration: transitionDuration,
+        page: () {
+          Flyer flyer = Get.arguments[0];
+          return InternetConnectionWrapper(
+            child: BlocProvider<FlyersCubit>(
+              create: (context) {
+                return getIt<FlyersCubit>();
+              },
+              child: Scaffold(body: FlyerView(flyer: flyer)),
             ),
           );
         }),

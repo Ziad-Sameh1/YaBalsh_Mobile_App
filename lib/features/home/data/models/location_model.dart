@@ -44,7 +44,7 @@ class LocationModel extends Location {
                 ? double.parse(json['long'] as String)
                 : json['long']
             : 23.33333,
-        deliveryTime: json['deliveryTime'] ?? '95',
+        deliveryTime: json['deliveryTime'] ?? 95,
         startTime: json['startTime'] ?? '11:00 am',
         endTime: json['endTime'] ?? '12:00 am');
   }

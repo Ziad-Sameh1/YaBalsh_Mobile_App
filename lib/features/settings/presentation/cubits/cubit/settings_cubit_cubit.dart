@@ -12,7 +12,7 @@ part 'settings_cubit_state.dart';
 class SettingsCubit extends Cubit<SettingsState> {
   final AppSettingsService appSettingsService;
   SettingsCubit({required this.appSettingsService})
-      : super(const IsNearStoresState(isNearStores: false));
+      : super(const IsNearStoresState(isNearStores: true));
 
   void getIsNearStoresSetting() async {
     final isNearSetting = await appSettingsService.getIsNearStoresSetting();
