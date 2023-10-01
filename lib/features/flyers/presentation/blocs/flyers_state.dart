@@ -3,6 +3,7 @@ import 'package:yabalash_mobile_app/features/flyers/domain/entities/FlyerProduct
 
 import '../../../../core/utils/enums/request_state.dart';
 import '../../../home/domain/entities/product.dart';
+import '../../../home/domain/entities/store.dart';
 import '../../domain/entities/Flyer.dart';
 
 class FlyersState extends Equatable {
@@ -16,6 +17,7 @@ class FlyersState extends Equatable {
   final int? currFlyerPage;
   final bool? paginationLoading;
   final List<Product>? flyerProducts;
+  final Store? currFlyerStore;
 
   const FlyersState(
       {this.flyers = const [],
@@ -27,6 +29,7 @@ class FlyersState extends Equatable {
       this.currFlyer = const Flyer(),
       this.currFlyerPage = 0,
       this.paginationLoading = false,
+      this.currFlyerStore = const Store(),
       this.flyerProducts = const []});
 
   FlyersState copyWith({
@@ -39,6 +42,7 @@ class FlyersState extends Equatable {
     Flyer? currFlyer,
     int? currFlyerPage,
     bool? paginationLoading,
+    Store? currFlyerStore,
     List<Product>? flyerProducts,
   }) =>
       FlyersState(
@@ -52,6 +56,7 @@ class FlyersState extends Equatable {
           currFlyer: currFlyer ?? this.currFlyer,
           currFlyerPage: currFlyerPage ?? this.currFlyerPage,
           paginationLoading: paginationLoading ?? this.paginationLoading,
+          currFlyerStore: currFlyerStore ?? this.currFlyerStore,
           flyerProducts: flyerProducts ?? this.flyerProducts);
 
   @override
@@ -63,6 +68,7 @@ class FlyersState extends Equatable {
         activeProduct,
         selectedFlyerProduct,
         currFlyer,
-        currFlyerPage
+        currFlyerPage,
+        currFlyerStore
       ];
 }

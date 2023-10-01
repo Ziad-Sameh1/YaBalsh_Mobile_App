@@ -9,15 +9,21 @@ class FlyerPage extends Equatable {
 
   final String? image;
 
-  const FlyerPage({this.pageId, this.products, this.image});
+  final int? width;
+
+  final int? height;
+
+  const FlyerPage({this.pageId, this.products, this.image, this.width, this.height});
 
   @override
-  List<Object?> get props => [pageId, products];
+  List<Object?> get props => [pageId, products, image, width, height];
 
   factory FlyerPage.fromJson(Map<String, dynamic> json) => FlyerPage(
-      pageId: json["page_id"],
+      pageId: json["id"],
       image: json["image"],
-      products: (json["products"] as List<dynamic>)
+      width: json["width"],
+      height: json["height"],
+      products: (json["sections"] as List<dynamic>)
           .map((e) => FlyerProduct.fromJson(e))
           .toList());
 }

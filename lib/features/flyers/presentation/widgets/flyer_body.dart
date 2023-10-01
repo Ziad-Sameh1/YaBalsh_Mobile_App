@@ -8,28 +8,20 @@ import 'package:yabalash_mobile_app/features/flyers/presentation/widgets/flyer_t
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/utils/enums/request_state.dart';
 import '../../../../core/widgets/yaBalash_toast.dart';
-import '../../domain/entities/Flyer.dart';
 import '../blocs/flyers_cubit.dart';
 import '../blocs/flyers_state.dart';
 
 class FlyerBody extends StatefulWidget {
-  final Flyer flyer;
 
   final PageController pageController = PageController(initialPage: 0);
 
-  FlyerBody({super.key, required this.flyer});
+  FlyerBody({super.key});
 
   @override
   State<StatefulWidget> createState() => _FlyerBodyState();
 }
 
 class _FlyerBodyState extends State<FlyerBody> {
-  @override
-  void initState() {
-    BlocProvider.of<FlyersCubit>(context).setCurrFlyer(widget.flyer);
-    super.initState();
-  }
-
   @override
   void dispose() {
     BlocProvider.of<FlyersCubit>(context).setCurrFlyer(null);
@@ -47,7 +39,7 @@ class _FlyerBodyState extends State<FlyerBody> {
               largeVerticalSpace,
               CustomHeader(
                 iconPath: AppAssets.backIcon,
-                title: "مجلة العروض - ${widget.flyer.store!.name!}",
+                title: "مجلة العروض - ${state.currFlyerStore?.name}",
               ),
               const FlyerDetailsSection(),
               const Divider(),

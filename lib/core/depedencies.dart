@@ -57,6 +57,7 @@ import 'package:yabalash_mobile_app/features/categories/domain/repositories/cate
 import 'package:yabalash_mobile_app/features/categories/domain/usecases/get_sub_categories_usecase.dart';
 import 'package:yabalash_mobile_app/features/categories/presentation/blocs/categories_cubit.dart';
 import 'package:yabalash_mobile_app/features/flyers/data/repositories/flyers_repository_impl.dart';
+import 'package:yabalash_mobile_app/features/flyers/domain/usecases/get_flyer_by_id_usecase.dart';
 import 'package:yabalash_mobile_app/features/flyers/domain/usecases/get_flyers_usecase.dart';
 import 'package:yabalash_mobile_app/features/flyers/domain/repositories/flyers_repository.dart';
 import 'package:yabalash_mobile_app/features/home/data/datasources/home_mock_datasource.dart';
@@ -367,6 +368,8 @@ setupDependecies() {
       () => GetAllNotificationsUseCase(notificationRepository: getIt()));
   getIt.registerLazySingleton<GetFlyersUseCase>(
       () => GetFlyersUseCase(flyersRepository: getIt()));
+  getIt.registerLazySingleton<GetFlyerByIdUseCase>(
+      () => GetFlyerByIdUseCase(flyersRepository: getIt()));
 
 //cubits/blocs
   getIt.registerFactory(
@@ -494,5 +497,8 @@ setupDependecies() {
   getIt.registerFactory(() => SettingsCubit(appSettingsService: getIt()));
   getIt.registerFactory(() => OtherBranchesCubit(searchStoreUsecase: getIt()));
   getIt.registerFactory(() => FlyersCubit(
-      getFlyersUseCase: getIt(), getProductDetailsUseCase: getIt()));
+      getStoreUseCase: GetStoreUseCase(cartRepository: getIt()),
+      getFlyersUseCase: getIt(),
+      getFlyerByIdUseCase: getIt(),
+      getProductDetailsUseCase: getIt()));
 }

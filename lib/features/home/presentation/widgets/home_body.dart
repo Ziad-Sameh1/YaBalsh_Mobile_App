@@ -13,6 +13,7 @@ import 'package:yabalash_mobile_app/features/home/presentation/widgets/search_se
 
 import '../../../../core/depedencies.dart';
 import '../../../../core/routes/app_routes.dart';
+import 'flyers_section.dart';
 
 class HomeBody extends StatelessWidget {
   const HomeBody({
@@ -47,7 +48,7 @@ class HomeBody extends StatelessWidget {
           const SliverToBoxAdapter(child: SearchSection()),
           SliverToBoxAdapter(child: mediumVerticalSpace),
           const SliverToBoxAdapter(child: LastOfferSection()),
-          // const SliverToBoxAdapter(child: FlyerSection()),
+          const SliverToBoxAdapter(child: FlyerSection()),
           const SliverToBoxAdapter(child: BannersSection()),
           SliverToBoxAdapter(child: mediumVerticalSpace),
           const SliverToBoxAdapter(child: NearStoresSection()),

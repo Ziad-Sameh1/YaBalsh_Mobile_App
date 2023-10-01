@@ -25,8 +25,7 @@ class FlyerCard extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            Get.toNamed(RouteHelper.getFlyerRoute(), arguments: [flyer]);
-            // TODO: navigate to flyer screen
+            Get.toNamed(RouteHelper.getFlyerRoute(), arguments: [flyer.flyerId, flyer.storeId]);
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,7 +35,7 @@ class FlyerCard extends StatelessWidget {
                 height: 100.h,
                 isAssetImage: false,
                 fit: BoxFit.cover,
-                imagePath: flyer.pages![0].image,
+                imagePath: flyer.thumbnail,
                 // backgroundColor: AppColorsLight.kSubCategoryCardColor,
                 withBorder: false,
               ),

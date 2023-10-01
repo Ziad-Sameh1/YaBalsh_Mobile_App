@@ -11,10 +11,20 @@ class FlyersRepositoryImpl extends FlyersRepository {
   FlyersRepositoryImpl({required this.flyerRemoteDataSource});
 
   @override
-  Future<Either<Failure, List<Flyer>>> getFlyers() async {
+  Future<Either<Failure, List<Flyer>>> getFlyers({int? page}) async {
     try {
-      final response = await flyerRemoteDataSource.getFlyers();
+      final response = await flyerRemoteDataSource.getFlyers(page: page);
       return Right(response.data as List<Flyer>);
+    } on ServerException catch (err) {
+      return Left(ServerFailure(message: err.errorModel.message!));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Flyer>> getFlyerById({required int id}) async {
+    try {
+      final response = await flyerRemoteDataSource.getFlyerById(id: id);
+      return Right(response.data as Flyer);
     } on ServerException catch (err) {
       return Left(ServerFailure(message: err.errorModel.message!));
     }

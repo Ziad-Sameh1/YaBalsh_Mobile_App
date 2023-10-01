@@ -482,13 +482,14 @@ class RouteHelper {
         transition: normalNavigationTransition,
         transitionDuration: transitionDuration,
         page: () {
-          Flyer flyer = Get.arguments[0];
+          final int id = Get.arguments[0];
+          final int storeId = Get.arguments[1];
           return InternetConnectionWrapper(
             child: BlocProvider<FlyersCubit>(
               create: (context) {
-                return getIt<FlyersCubit>();
+                return getIt<FlyersCubit>()..getCurrFlyerDetails(id)..setCurrFlyerStore(storeId);
               },
-              child: Scaffold(body: FlyerView(flyer: flyer)),
+              child: const Scaffold(body: FlyerView()),
             ),
           );
         }),

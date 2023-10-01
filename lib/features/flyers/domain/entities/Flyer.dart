@@ -5,14 +5,16 @@ import 'FlyerPage.dart';
 
 class Flyer extends Equatable {
   final int? flyerId;
-  final Store? store;
+  final String? name;
+  final String? thumbnail;
+  final int? storeId;
   final List<FlyerPage>? pages;
   final DateTime? startDate;
   final DateTime? endDate;
 
   const Flyer(
-      {this.flyerId, this.store, this.pages, this.startDate, this.endDate});
+      {this.flyerId, this.name, this.thumbnail, this.storeId, this.pages, this.startDate, this.endDate});
 
   @override
-  List<Object?> get props => [flyerId, store, pages, startDate, endDate];
+  List<Object?> get props => [flyerId, name, thumbnail, storeId, pages, startDate, endDate];
 }

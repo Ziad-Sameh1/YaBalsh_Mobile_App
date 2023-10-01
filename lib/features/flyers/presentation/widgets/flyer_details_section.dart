@@ -18,8 +18,9 @@ class FlyerDetailsSection extends StatelessWidget {
       return Padding(
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: Row(children: [
+            // state.currFlyer!.store!.logoImagePath
             CustomCard(
-              imagePath: state.currFlyer!.store!.logoImagePath,
+              imagePath: state.currFlyerStore?.logoImagePath,
               fit: BoxFit.fill,
               isAssetImage: false,
               borderRadius: 10.r,
@@ -29,7 +30,8 @@ class FlyerDetailsSection extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(state.currFlyer!.store!.name!,
+                // state.currFlyer!.store!.name!
+                    Text(state.currFlyerStore?.name ?? "",
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontSize: 16.sp, fontWeight: FontWeight.w700)),
                     Row(
@@ -42,7 +44,7 @@ class FlyerDetailsSection extends StatelessWidget {
                             child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 8.w),
                                 child: Text(
-                                    getFlyerStatus(state.currFlyer!.endDate!),
+                                    getFlyerStatus(state.currFlyer?.endDate ?? DateTime(2023)),
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall
@@ -54,7 +56,7 @@ class FlyerDetailsSection extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.only(right: 10.w),
                           child: Text(
-                              "من ${getFlyerTitle(state.currFlyer!.startDate!)} إلي ${getFlyerTitle(state.currFlyer!.endDate!)}",
+                              "من ${getFlyerTitle(state.currFlyer?.startDate ?? DateTime(2023)) } إلي ${getFlyerTitle(state.currFlyer!.endDate ?? DateTime(2023))}",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall

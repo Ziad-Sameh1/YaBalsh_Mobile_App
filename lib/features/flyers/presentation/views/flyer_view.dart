@@ -6,11 +6,9 @@ import '../../domain/entities/Flyer.dart';
 
 class FlyerView extends StatelessWidget {
 
-  final Flyer flyer;
-
-  const FlyerView({super.key, required this.flyer});
+  const FlyerView({super.key});
 
   @override
-  Widget build(BuildContext context) => FlyerBody(flyer: flyer);
+  Widget build(BuildContext context) => FlyerBody();
 
 }

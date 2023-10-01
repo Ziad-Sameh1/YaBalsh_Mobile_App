@@ -74,7 +74,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void getFlyersList() async {
-    final response = await getFlyersUseCase(NoParams());
+    final response = await getFlyersUseCase(const FlyersParams(page: 1));
     response.fold(
         (failure) => {
               emit(state.copyWith(

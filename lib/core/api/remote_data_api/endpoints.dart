@@ -36,3 +36,4 @@ String getProductEndPointByBarcode(String barcode) =>
     '$productBarcodeEndpoint/$barcode';
 String getProductsRelevantsById(int id) => '$productRelevantsEndpoint/$id';
 String getFlyersEndpoint() => flyersEndpoint;
+String getFlyerEndpointById(int id) => '$flyersEndpoint/$id';

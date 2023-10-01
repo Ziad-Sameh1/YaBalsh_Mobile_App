@@ -13,5 +13,5 @@ class FlyerProductPoint extends Equatable {
   @override
   List<Object?> get props => [x,y];
 
-  factory FlyerProductPoint.fromJson(Map<String, dynamic> json) => FlyerProductPoint(x: json["x"], y: json["y"]);
+  factory FlyerProductPoint.fromJson(Map<String, dynamic> json) => FlyerProductPoint(x: double.parse('${json["x"]}'), y: double.parse('${json["y"]}'));
 }

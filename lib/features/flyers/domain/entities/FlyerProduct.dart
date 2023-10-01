@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:yabalash_mobile_app/features/flyers/domain/entities/FlyerProductPoint.dart';
 
 class FlyerProduct extends Equatable {
-  final int? productId;
+  final String? productId;
   final FlyerProductPoint? x1y1;
   final FlyerProductPoint? x1y2;
   final FlyerProductPoint? x2y1;

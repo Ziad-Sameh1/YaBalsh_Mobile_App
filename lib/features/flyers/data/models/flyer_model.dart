@@ -9,13 +9,17 @@ import '../../domain/entities/FlyerProduct.dart';
 class FlyerModel extends Flyer {
   const FlyerModel(
       {int? id,
-      Store? store,
+      String? name,
+      String? thumbnail,
+      int? storeId,
       List<FlyerPage>? pages,
       DateTime? startDate,
       DateTime? endDate})
       : super(
             flyerId: id,
-            store: store,
+            name: name,
+            thumbnail: thumbnail,
+            storeId: storeId,
             pages: pages,
             startDate: startDate,
             endDate: endDate);
@@ -23,12 +27,14 @@ class FlyerModel extends Flyer {
   factory FlyerModel.fromJson(Map<String, dynamic> json) {
     return FlyerModel(
         id: json["id"],
-        store: StoreModel.fromJson(json["store"]),
-        pages: (json["pages"] as List<dynamic>)
+        name: json["name"],
+        thumbnail: json["thumbnail"],
+        storeId: json["store_id"],
+        pages: json["pages"] == null ? null :  (json["pages"]  as List<dynamic>)
             .map((e) => FlyerPage.fromJson(e))
             .toList(),
         startDate:
-            DateFormat('dd-MM-yyyy hh:mm:ss a').parse(json["start_date"]),
-        endDate: DateFormat('dd-MM-yyyy hh:mm:ss a').parse(json["end_date"]));
+            DateTime.parse(json["start_time"]),
+        endDate: DateTime.parse(json["end_time"]));
   }
 }

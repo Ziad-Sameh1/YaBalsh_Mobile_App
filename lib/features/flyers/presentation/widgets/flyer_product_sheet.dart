@@ -56,7 +56,7 @@ class _FlyerProductSheetContentState extends State<FlyerProductSheetContent> {
                         Text(state.activeProduct!.name!,
                             style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w700,
                                 color: Theme.of(context).primaryColor)),
                         _FlyerPrice(price: storePrice ?? 0),
                         InkWell(
